@@ -15,7 +15,7 @@ from __future__ import annotations
 from asyncio import Queue, Semaphore, Task, create_task, gather, sleep, wait_for
 from asyncio.exceptions import CancelledError, TimeoutError
 from logging import Logger, getLogger
-from typing import ClassVar, Final
+from typing import Any, ClassVar, Final
 
 ### Local modules ###
 from etiquette._types import TaskData
@@ -25,18 +25,20 @@ logger: Logger = getLogger(__name__)
 
 
 class Etiquette:
-  active_tasks: ClassVar[set[Task]] = set()
+  active_tasks: ClassVar[set[Task[Any]]] = set()
+  running: ClassVar[bool] = False
   semaphore: ClassVar[Semaphore]
-  task_queue: ClassVar[Queue]
+  task_queue: ClassVar[Queue[TaskData]]
+  worker_task: ClassVar[Task[None]]
 
   @classmethod
-  def initiate(cls, max_concurrent_tasks: int = 2):
+  def initiate(cls, max_concurrent_tasks: int = 2) -> None:
     """Start the background worker that processes queued tasks"""
     cls.active_tasks = set()
     cls.running = True
     cls.semaphore = Semaphore(value=max_concurrent_tasks)
     cls.task_queue = Queue()
-    cls.worker_task: Task[None] = create_task(coro=cls._worker())
+    cls.worker_task = create_task(coro=cls._worker())
 
   @classmethod
   async def release(cls) -> None:
@@ -76,7 +78,7 @@ class Etiquette:
     for attempt in range(task_data.max_retries):
       try:
         logger.debug(msg=f"Processing task {task_data.task_id}, attempt {attempt + 1}")
-        await task_data.task()
+        await task_data.callable()
         logger.debug(msg=f"Task {task_data.task_id} completed successfully")
         return
       except Exception as err:

@@ -11,17 +11,16 @@
 # *************************************************************
 
 ### Standard packages ###
-from asyncio import Task
 from dataclasses import dataclass
 from uuid import UUID
-from typing import Final
+from typing import Any, Callable, Final
 
 
 @dataclass
 class TaskData:
-  task: Task
+  callable: Callable[..., Any]
   task_id: UUID
   max_retries: int = 3
 
 
-__all__: Final[tuple[str, ...]] = "TaskData"
+__all__: Final[tuple[str, ...]] = ("TaskData",)

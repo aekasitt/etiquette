@@ -13,7 +13,7 @@
 ### Standard packages ###
 from __future__ import annotations
 from logging import Logger, getLogger
-from typing import Callable, Final
+from typing import Any, Callable, Final
 from uuid import UUID, uuid4 as uuid
 
 ### Third-party packages ###
@@ -34,13 +34,12 @@ class Decorum:
     return self
 
   async def add_task(
-    self, task: Callable[[], None], task_id: None | UUID = None, max_retries: int = 2
-  ):
+    self, callable: Callable[..., Any], task_id: None | UUID = None, max_retries: int = 2
+  ) -> None:
     """Add a task to the queue"""
-    print(type(task))
     if task_id is None:
       task_id = uuid()
-    task_data: TaskData = TaskData(task=task, task_id=task_id, max_retries=max_retries)
+    task_data: TaskData = TaskData(callable=callable, task_id=task_id, max_retries=max_retries)
     await Etiquette.task_queue.put(item=task_data)
     logger.debug(msg=f"Task {task_id} added to queue. Queue size: {Etiquette.task_queue.qsize()}")
 
