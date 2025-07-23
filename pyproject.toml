@@ -76,10 +76,6 @@ examples = [
 ]
 
 
-[project.scripts]
-example-fastapi = 'examples.fastapi:main'
-
-
 [tool.mypy]
 disallow_incomplete_defs = true
 disallow_untyped_calls = true
