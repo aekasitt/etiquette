@@ -42,15 +42,16 @@ class Etiquette:
 
   @classmethod
   async def release(cls) -> None:
-    cls.running = False
-    if cls.worker_task:
-      cls.worker_task.cancel()
-      try:
-        await cls.worker_task
-      except CancelledError:
-        pass
-    if cls.active_tasks:
-      await gather(*cls.active_tasks, return_exceptions=True)
+    if cls.running:
+      cls.running = False
+      if cls.worker_task:
+        cls.worker_task.cancel()
+        try:
+          await cls.worker_task
+        except CancelledError:
+          pass
+      if cls.active_tasks:
+        await gather(*cls.active_tasks, return_exceptions=True)
 
   @classmethod
   async def _worker(cls) -> None:

@@ -16,10 +16,6 @@ from logging import Logger, getLogger
 from typing import Any, Callable, Final
 from uuid import UUID, uuid4 as uuid
 
-### Third-party packages ###
-from starlette.requests import Request
-from starlette.responses import Response
-
 ### Local modules ###
 from etiquette._types import TaskData
 from etiquette.core import Etiquette
@@ -28,10 +24,9 @@ logger: Logger = getLogger(__name__)
 
 
 class Decorum:
-  def __call__(self, request: Request, response: Response) -> Decorum:
-    if not Etiquette.semaphore:
-      logger.error("Please initiate Etiquette at FastAPI / Litestar startup")
-    return self
+  def __init__(self) -> None:
+    if not Etiquette.running:
+      raise ValueError("Please initiate Etiquette at FastAPI / Litestar startup")
 
   async def add_task(
     self, callable: Callable[..., Any], task_id: None | UUID = None, max_retries: int = 2
