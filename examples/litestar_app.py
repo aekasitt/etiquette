@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.9
 # coding:utf-8
 # Copyright (C) 2025 All rights reserved.
-# FILENAME:    ~~/examples/litestar.py
+# FILENAME:    ~~/examples/litestar_app.py
 # VERSION:     0.0.1
 # CREATED:     2025-07-23 14:20
 # AUTHOR:      Sitt Guruvanich <aekazitt+github@gmail.com>
@@ -16,8 +16,9 @@ from contextlib import asynccontextmanager
 from typing import AsyncGenerator, Final
 
 ### Third-party packages ###
-from litestar import Litestar, get
+from litestar import Litestar
 from litestar.di import Provide
+from litestar.handlers.http_handlers.decorators import get
 
 ### Local modules ###
 from etiquette import Decorum, Etiquette
