@@ -28,7 +28,7 @@ from etiquette import Decorum, Etiquette
 async def lifespan(_: Litestar) -> AsyncGenerator[None, None]:
   Etiquette.initiate(max_concurrent_tasks=16)
   yield
-  Etiquette.release()
+  await Etiquette.release()
 
 
 @get("/add-task")

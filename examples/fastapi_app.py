@@ -27,7 +27,7 @@ from etiquette import Decorum, Etiquette
 async def lifespan(_: FastAPI) -> AsyncGenerator[None, None]:
   Etiquette.initiate(max_concurrent_tasks=16)
   yield
-  Etiquette.release()
+  await Etiquette.release()
 
 
 app: FastAPI = FastAPI(lifespan=lifespan)
