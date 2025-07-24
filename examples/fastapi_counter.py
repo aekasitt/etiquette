@@ -11,9 +11,9 @@
 # *************************************************************
 
 ### Standard packages ###
-from asyncio import sleep
+from asyncio import Lock, sleep
 from contextlib import asynccontextmanager
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Annotated, AsyncGenerator, Final
 
 ### Third-party packages ###
@@ -37,11 +37,14 @@ app: FastAPI = FastAPI(lifespan=lifespan)
 @dataclass
 class Counter:
   count: int = 0
+  _lock: Lock = field(default_factory=Lock, init=False)
 
   async def increment(self) -> None:
-    self.count += 1
+    async with self._lock:
+      self.count += 1
+      current_count: int = self.count
     await sleep(delay=1)
-    print(f"{self.count=}")
+    print(f"{current_count=}")
 
 
 counter: Counter = Counter()
