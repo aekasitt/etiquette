@@ -1,7 +1,9 @@
-### byte-compiled ###
+# byte-compiled
 **/__pycache__
 **/*.so
 
+# custom token holder
+pypi-token.pypi
 
 # python virtual environment
 .venv
