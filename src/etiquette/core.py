@@ -57,7 +57,7 @@ class Etiquette:
   async def _worker(cls) -> None:
     while cls.running:
       try:
-        task_data = await wait_for(fut=cls.task_queue.get(), timeout=0.5)
+        task_data: TaskData = await wait_for(fut=cls.task_queue.get(), timeout=0.5)
         task: Task[None] = create_task(coro=cls._process_task_wrapper(task_data=task_data))
         cls.active_tasks.add(task)
         task.add_done_callback(cls.active_tasks.discard)
