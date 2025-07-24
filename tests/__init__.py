@@ -23,8 +23,8 @@ from fastapi import FastAPI
 from fastapi.param_functions import Depends
 from fastapi.testclient import TestClient
 from pytest import fixture
-from starlette.reqeusts import Request
-from starlette.responses import JSONResponse, PlainTextResponse
+from starlette.requests import Request
+from starlette.responses import JSONResponse
 
 ### Local modules ###
 from etiquette import Decorum, Etiquette
@@ -34,7 +34,7 @@ from etiquette import Decorum, Etiquette
 def test_client() -> TestClient:
   """
   Sets up a FastAPI TestClient wrapped around an application implementing both
-  Context and Headers extension pattern
+  SafeCounter and UnsafeCounter increment call by Decorum
 
   ---
   :return: test client fixture used for local testing
@@ -43,7 +43,7 @@ def test_client() -> TestClient:
 
   @asynccontextmanager
   async def lifespan(_: FastAPI) -> AsyncGenerator[None, None]:
-    Etiquette.initiate()
+    Etiquette.initiate(max_concurrent_tasks=8)
     yield
     await Etiquette.release()
 
@@ -52,45 +52,52 @@ def test_client() -> TestClient:
   @dataclass
   class UnsafeCounter:
     """Counter without thread safety - demonstrates race condition"""
+
     count: int = 0
 
+    @property
+    async def current(self) -> int:
+      return self.count
+
     async def increment(self) -> None:
-      current = self.count
       await sleep(0.001)
-      self.count = current + 1
-      print(f"Unsafe: {self.count=}")
+      self.count += 1
 
   @dataclass
   class SafeCounter:
     """Counter with thread safety - fixes race condition"""
+
     count: int = 0
     _lock: Lock = field(default_factory=Lock, init=False)
+
+    @property
+    async def current(self) -> int:
+      async with self._lock:
+        return self.count
 
     async def increment(self) -> None:
       async with self._lock:
         current = self.count
         await sleep(0.001)
         self.count = current + 1
-        current_count = self.count
-      print(f"Safe: {current_count=}")
 
   safe_counter: SafeCounter = SafeCounter()
 
   @app.get("/safe-counter")
-  def increment_safe_counter(decorum: Annotated[Decorum, Depends(Decorum)]) -> str:
-    decorum.add_task(safe_counter.increment)
-    return "OK"
+  async def increment_safe_counter(decorum: Annotated[Decorum, Depends(Decorum)]) -> int:
+    await decorum.add_task(safe_counter.increment)
+    return await safe_counter.current
 
   unsafe_counter: UnsafeCounter = UnsafeCounter()
 
-  @app.get("/unsafe-counter", response_class=PlainTextResponse)
-  def increment_unsafe_counter(decorum: Annotated[Decorum, Depends(Decorum)]) -> str:
-    decorum.add_task(unsafe_counter.increment)
-    return "OK"
+  @app.get("/unsafe-counter")
+  async def increment_unsafe_counter(decorum: Annotated[Decorum, Depends(Decorum)]) -> int:
+    await decorum.add_task(unsafe_counter.increment)
+    return await unsafe_counter.current
 
   @app.exception_handler(ValueError)
   def csrf_protect_error_handler(request: Request, exc: ValueError) -> JSONResponse:
-    return JSONResponse(status_code=exc.status_code, content={"detail": exc.message})
+    return JSONResponse(status_code=520, content={"detail": str(exc)})
 
   return TestClient(app)
 

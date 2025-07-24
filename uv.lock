@@ -106,12 +106,16 @@ litestar = [
     { name = "litestar" },
     { name = "uvicorn" },
 ]
+tests = [
+    { name = "fastapi" },
+    { name = "httpx" },
+    { name = "pytest" },
+    { name = "pytest-asyncio" },
+]
 
 [package.dev-dependencies]
 dev = [
     { name = "mypy" },
-    { name = "pytest" },
-    { name = "pytest-asyncio" },
     { name = "ruff" },
 ]
 
@@ -119,19 +123,21 @@ dev = [
 requires-dist = [
     { name = "fastapi", marker = "extra == 'examples'", specifier = ">=0.116.1" },
     { name = "fastapi", marker = "extra == 'fastapi'", specifier = ">=0.116.1" },
+    { name = "fastapi", marker = "extra == 'tests'", specifier = ">=0.116.1" },
+    { name = "httpx", marker = "extra == 'tests'", specifier = ">=0.28.1" },
     { name = "litestar", marker = "extra == 'examples'", specifier = ">=2.16.0" },
     { name = "litestar", marker = "extra == 'litestar'", specifier = ">=2.16.0" },
+    { name = "pytest", marker = "extra == 'tests'", specifier = ">=8.4.1" },
+    { name = "pytest-asyncio", marker = "extra == 'tests'", specifier = ">=1.1.0" },
     { name = "uvicorn", marker = "extra == 'examples'", specifier = ">=0.35.0" },
     { name = "uvicorn", marker = "extra == 'fastapi'", specifier = ">=0.35.0" },
     { name = "uvicorn", marker = "extra == 'litestar'", specifier = ">=0.35.0" },
 ]
-provides-extras = ["fastapi", "litestar", "examples"]
+provides-extras = ["fastapi", "litestar", "examples", "tests"]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "mypy", specifier = ">=1.17.0" },
-    { name = "pytest", specifier = ">=8.4.1" },
-    { name = "pytest-asyncio", specifier = ">=1.1.0" },
     { name = "ruff", specifier = ">=0.12.4" },
 ]
 

@@ -6,8 +6,6 @@ requires = [ 'hatchling >=1.27.0' ]
 [dependency-groups]
 dev = [
   'mypy >=1.17.0',
-  'pytest >=8.4.1',
-  'pytest-asyncio >=1.1.0',
   'ruff >=0.12.4',
 ]
 
@@ -75,13 +73,19 @@ examples = [
   'litestar >=2.16.0',
   'uvicorn >=0.35.0',
 ]
+tests = [
+  'fastapi >=0.116.1',
+  'httpx >=0.28.1',
+  'pytest >=8.4.1',
+  'pytest-asyncio >=1.1.0',
+]
 
 
 [tool.mypy]
 disallow_incomplete_defs = true
 disallow_untyped_calls = true
 disallow_untyped_defs = true
-exclude = [ 'examples', 'tests' ]
+exclude = [ 'examples' ]
 strict = true
 
 
