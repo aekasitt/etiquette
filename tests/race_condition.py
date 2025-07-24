@@ -22,18 +22,16 @@ from tests import test_client
 @mark.asyncio
 async def test_safe_counter(test_client: TestClient) -> None:
   """Test to demonstrate race condition prevention on SafeCounter"""
-  with test_client as client:
-    for i in range(20):
-      client.get("/safe-counter")
-    response: Response = client.get("/safe-counter")
-    assert int(response.text) == 20
+  for i in range(20):
+    test_client.get("/safe-counter")
+  response: Response = test_client.get("/safe-counter")
+  assert int(response.text) == 20
 
 
 @mark.asyncio
 async def test_unsafe_counter(test_client: TestClient) -> None:
   """Test to demonstrate race condition on UnsafeCounter"""
-  with test_client as client:
-    for i in range(20):
-      client.get("/unsafe-counter")
-    response: Response = client.get("/unsafe-counter")
-    assert int(response.text) < 20
+  for i in range(20):
+    test_client.get("/unsafe-counter")
+  response: Response = test_client.get("/unsafe-counter")
+  assert int(response.text) < 20

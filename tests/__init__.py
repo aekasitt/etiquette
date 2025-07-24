@@ -31,7 +31,7 @@ from etiquette import Decorum, Etiquette
 
 
 @fixture
-def test_client() -> TestClient:
+def test_client() -> AsyncGenerator[TestClient, None]:
   """
   Sets up a FastAPI TestClient wrapped around an application implementing both
   SafeCounter and UnsafeCounter increment call by Decorum
@@ -99,7 +99,8 @@ def test_client() -> TestClient:
   def csrf_protect_error_handler(request: Request, exc: ValueError) -> JSONResponse:
     return JSONResponse(status_code=520, content={"detail": str(exc)})
 
-  return TestClient(app)
+  with TestClient(app) as client:
+    yield client
 
 
 __all__: Final[tuple[str, ...]] = ("test_client",)
