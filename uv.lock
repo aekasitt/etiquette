@@ -109,6 +109,7 @@ litestar = [
 tests = [
     { name = "fastapi" },
     { name = "httpx" },
+    { name = "litestar" },
     { name = "pytest" },
     { name = "pytest-asyncio" },
 ]
@@ -127,6 +128,7 @@ requires-dist = [
     { name = "httpx", marker = "extra == 'tests'", specifier = ">=0.28.1" },
     { name = "litestar", marker = "extra == 'examples'", specifier = ">=2.16.0" },
     { name = "litestar", marker = "extra == 'litestar'", specifier = ">=2.16.0" },
+    { name = "litestar", marker = "extra == 'tests'", specifier = ">=2.16.0" },
     { name = "pytest", marker = "extra == 'tests'", specifier = ">=8.4.1" },
     { name = "pytest-asyncio", marker = "extra == 'tests'", specifier = ">=1.1.0" },
     { name = "uvicorn", marker = "extra == 'examples'", specifier = ">=0.35.0" },

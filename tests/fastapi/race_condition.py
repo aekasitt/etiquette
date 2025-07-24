@@ -1,14 +1,17 @@
 #!/usr/bin/env python3.9
 # coding:utf-8
 # Copyright (C) 2025 All rights reserved.
-# FILENAME:    ~~/tests/race_condition.py
+# FILENAME:    ~~/tests/fastapi/race_condition.py
 # VERSION:     0.0.1
 # CREATED:     2025-07-24 13:11
 # AUTHOR:      Sitt Guruvanich <aekazitt+github@gmail.com>
-# DESCRIPTION: Test script to demonstrate race condition when used incorrectly
+# DESCRIPTION: Test script to demonstrate FastAPI race condition prevention
 #
 # HISTORY:
 # *************************************************************
+"""
+Tests for Etiquette plugin for FastAPI race condition scenarios
+"""
 
 ### Third-party packages ###
 from fastapi.testclient import TestClient
@@ -16,7 +19,7 @@ from httpx import Response
 from pytest import mark
 
 ### Local modules ###
-from tests import test_client
+from tests.fastapi import test_client
 
 
 @mark.asyncio
