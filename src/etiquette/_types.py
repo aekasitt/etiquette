@@ -12,8 +12,8 @@
 
 ### Standard packages ###
 from dataclasses import dataclass
-from uuid import UUID
 from typing import Any, Callable, Final
+from uuid import UUID
 
 
 @dataclass

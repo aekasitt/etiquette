@@ -12,8 +12,8 @@
 
 ### Standard packages ###
 from asyncio import sleep
-from dataclasses import dataclass
 from contextlib import asynccontextmanager
+from dataclasses import dataclass
 from typing import AsyncGenerator, Final
 
 ### Third-party packages ###

@@ -12,6 +12,7 @@
 
 ### Standard packages ###
 from __future__ import annotations
+
 from asyncio import Queue, Semaphore, Task, create_task, gather, sleep, wait_for
 from asyncio.exceptions import CancelledError, TimeoutError
 from logging import Logger, getLogger
@@ -19,7 +20,6 @@ from typing import Any, ClassVar, Final
 
 ### Local modules ###
 from etiquette._types import TaskData
-
 
 logger: Logger = getLogger(__name__)
 
