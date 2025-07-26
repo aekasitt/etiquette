@@ -31,7 +31,6 @@ class Decorum:
   async def add_task(
     self,
     callable: Callable[..., Any],
-    max_retries: int = 2,
     **kwargs: Any,
   ) -> UUID:
     """Add a task to the queue"""
@@ -39,8 +38,7 @@ class Decorum:
     task_data: TaskData = TaskData(
       callable=callable,
       kwargs=kwargs,
-      max_retries=max_retries,
-      task_id=task_id
+      task_id=task_id,
     )
     await Etiquette.task_queue.put(item=task_data)
     logger.debug(msg=f"Task {task_id} added to queue. Queue size: {Etiquette.task_queue.qsize()}")

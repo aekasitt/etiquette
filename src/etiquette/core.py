@@ -25,6 +25,7 @@ logger: Logger = getLogger(__name__)
 
 class Etiquette:
   active_tasks: ClassVar[set[Task[Any]]] = set()
+  retries: ClassVar[int] = 3
   running: ClassVar[bool] = False
   semaphore: ClassVar[Semaphore]
   task_queue: ClassVar[Queue[TaskData]]
@@ -75,7 +76,7 @@ class Etiquette:
   @classmethod
   async def _process_task(cls, task_data: TaskData) -> None:
     """Process a single task with retry logic"""
-    for attempt in range(task_data.max_retries):
+    for attempt in range(cls.retries):
       try:
         logger.debug(msg=f"Processing task {task_data.task_id}, attempt {attempt + 1}")
         await task_data.callable(**task_data.kwargs)
@@ -83,13 +84,13 @@ class Etiquette:
         return
       except Exception as err:
         logger.error(f"Task {task_data.task_id} failed on attempt {attempt + 1}: {err}")
-        if attempt < task_data.max_retries:
+        if attempt < cls.retries:
           wait_time: int = 2**attempt
           logger.debug(msg=f"Retrying task {task_data.task_id} in {wait_time} seconds...")
           await sleep(delay=wait_time)
         else:
           logger.error(
-            msg=f"Task {task_data.task_id} failed after {task_data.max_retries + 1} attempts"
+            msg=f"Task {task_data.task_id} failed after {cls.retries} attempts"
           )
 
 
