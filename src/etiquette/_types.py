@@ -19,6 +19,7 @@ from uuid import UUID
 @dataclass
 class TaskData:
   callable: Callable[..., Any]
+  kwargs: Any | None
   task_id: UUID
   max_retries: int = 3
 

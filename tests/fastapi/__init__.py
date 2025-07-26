@@ -56,6 +56,10 @@ def test_client() -> AsyncGenerator[TestClient, None]:
 
     count: int = 0
 
+    async def add(self, amount: int) -> None:
+      await sleep(0.001)
+      self.count += amount
+
     @property
     async def current(self) -> int:
       return self.count
@@ -71,6 +75,11 @@ def test_client() -> AsyncGenerator[TestClient, None]:
     count: int = 0
     _lock: Lock = field(default_factory=Lock, init=False)
 
+    async def add(self, amount: int) -> None:
+      async with self._lock:
+        await sleep(0.001)
+        self.count += amount
+
     @property
     async def current(self) -> int:
       async with self._lock:
@@ -78,9 +87,8 @@ def test_client() -> AsyncGenerator[TestClient, None]:
 
     async def increment(self) -> None:
       async with self._lock:
-        current = self.count
         await sleep(0.001)
-        self.count = current + 1
+        self.count += 1
 
   safe_counter: SafeCounter = SafeCounter()
 
@@ -89,11 +97,27 @@ def test_client() -> AsyncGenerator[TestClient, None]:
     await decorum.add_task(safe_counter.increment)
     return await safe_counter.current
 
+  @app.get("/safe-counter/{amount}")
+  async def add_amount_to_safe_counter(
+    amount: int,
+    decorum: Annotated[Decorum, Depends(Decorum)]
+  ) -> int:
+    await decorum.add_task(safe_counter.add, amount=amount)
+    return await safe_counter.current
+
   unsafe_counter: UnsafeCounter = UnsafeCounter()
 
   @app.get("/unsafe-counter")
   async def increment_unsafe_counter(decorum: Annotated[Decorum, Depends(Decorum)]) -> int:
     await decorum.add_task(unsafe_counter.increment)
+    return await unsafe_counter.current
+
+  @app.get("/unsafe-counter/{amount}")
+  async def add_amount_to_unsafe_counter(
+    amount: int,
+    decorum: Annotated[Decorum, Depends(Decorum)]
+  ) -> int:
+    await decorum.add_task(unsafe_counter.add, amount=amount)
     return await unsafe_counter.current
 
   @app.exception_handler(ValueError)

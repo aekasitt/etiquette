@@ -53,6 +53,10 @@ def test_client() -> AsyncGenerator[TestClient, None]:
 
     count: int = 0
 
+    async def add(self, amount: int) -> None:
+      await sleep(0.001)
+      self.count += 1
+
     @property
     async def current(self) -> int:
       return self.count
@@ -67,6 +71,11 @@ def test_client() -> AsyncGenerator[TestClient, None]:
 
     count: int = 0
     _lock: Lock = field(default_factory=Lock, init=False)
+
+    async def add(self, amount: int) -> None:
+      async with self._lock:
+        await sleep(0.001)
+        self.count += amount
 
     @property
     async def current(self) -> int:
@@ -86,6 +95,11 @@ def test_client() -> AsyncGenerator[TestClient, None]:
     await decorum.add_task(safe_counter.increment)
     return await safe_counter.current
 
+  @get("/safe-counter/{amount:int}")
+  async def add_amount_to_safe_counter(amount: int, decorum: Decorum) -> int:
+    await decorum.add_task(safe_counter.add, amount=amount)
+    return await safe_counter.current
+
   unsafe_counter: UnsafeCounter = UnsafeCounter()
 
   @get("/unsafe-counter")
@@ -93,10 +107,20 @@ def test_client() -> AsyncGenerator[TestClient, None]:
     await decorum.add_task(unsafe_counter.increment)
     return await unsafe_counter.current
 
+  @get("/unsafe-counter/{amount:int}")
+  async def add_amount_to_unsafe_counter(amount: int, decorum: Decorum) -> int:
+    await decorum.add_task(unsafe_counter.add, amount=amount)
+    return await safe_counter.current
+
   app: Litestar = Litestar(
     lifespan=[lifespan],
     dependencies={"decorum": Provide(Decorum, sync_to_thread=True)},
-    route_handlers=[increment_safe_counter, increment_unsafe_counter],
+    route_handlers=[
+      add_amount_to_safe_counter,
+      add_amount_to_unsafe_counter,
+      increment_safe_counter,
+      increment_unsafe_counter
+    ],
   )
 
   with TestClient(app) as client:
