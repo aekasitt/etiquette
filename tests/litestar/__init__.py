@@ -92,8 +92,11 @@ def test_client() -> AsyncGenerator[TestClient, None]:
   safe_counter: SafeCounter = SafeCounter()
 
   @get("/safe-counter")
-  async def increment_safe_counter(decorum: Decorum) -> int:
-    await decorum.add_task(safe_counter.increment)
+  async def increment_safe_counter(decorum: Decorum, amount: None | int = None) -> int:
+    if amount is not None:
+      await decorum.add_task(safe_counter.add, amount)
+    else:
+      await decorum.add_task(safe_counter.increment)
     return await safe_counter.current
 
   @get("/safe-counter/{amount:int}")
@@ -118,8 +121,11 @@ def test_client() -> AsyncGenerator[TestClient, None]:
   unsafe_counter: UnsafeCounter = UnsafeCounter()
 
   @get("/unsafe-counter")
-  async def increment_unsafe_counter(decorum: Decorum) -> int:
-    await decorum.add_task(unsafe_counter.increment)
+  async def increment_unsafe_counter(decorum: Decorum, amount: None | int = None) -> int:
+    if amount is not None:
+      await decorum.add_task(unsafe_counter.add, amount)
+    else:
+      await decorum.add_task(unsafe_counter.increment)
     return await unsafe_counter.current
 
   @get("/unsafe-counter/{amount:int}")

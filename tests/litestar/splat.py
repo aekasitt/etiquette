@@ -23,8 +23,8 @@ from tests.litestar import test_client
 
 
 @mark.asyncio
-async def test_safe_counter(test_client: TestClient) -> None:
-  """Test to demonstrate passing splat arguments on SafeCounter"""
+async def test_safe_counter_using_path_parametes(test_client: TestClient) -> None:
+  """Test to demonstrate passing splat arguments via path parameters on SafeCounter"""
   for i in range(20):
     test_client.get(f"/safe-counter/{i}")
   response: Response = test_client.get(f"/safe-counter/{i}")
@@ -32,9 +32,27 @@ async def test_safe_counter(test_client: TestClient) -> None:
 
 
 @mark.asyncio
-async def test_unsafe_counter(test_client: TestClient) -> None:
-  """Test to demonstrate passing splat arguments on UnsafeCounter"""
+async def test_safe_counter_using_query_parameters(test_client: TestClient) -> None:
+  """Test to demonstrate passing splat arguments via query paremeters on SafeCounter"""
+  for amount in range(20):
+    test_client.get(f"/safe-counter?{amount=}")
+  response: Response = test_client.get(f"/safe-counter?{amount=}")
+  assert int(response.text) == sum(range(20))
+
+
+@mark.asyncio
+async def test_unsafe_counter_using_path_parameters(test_client: TestClient) -> None:
+  """Test to demonstrate passing splat arguments via path parameters on UnsafeCounter"""
   for i in range(20):
     test_client.get(f"/unsafe-counter/{i}")
   response: Response = test_client.get(f"/unsafe-counter/{i}")
+  assert int(response.text) < sum(range(20))
+
+
+@mark.asyncio
+async def test_unsafe_counter_using_query_parameters(test_client: TestClient) -> None:
+  """Test to demonstrate passing splat arguments via query parameters on UnsafeCounter"""
+  for amount in range(20):
+    test_client.get(f"/unsafe-counter?{amount=}")
+  response: Response = test_client.get(f"/unsafe-counter?{amount=}")
   assert int(response.text) < sum(range(20))

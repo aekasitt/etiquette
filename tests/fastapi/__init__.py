@@ -94,8 +94,14 @@ def test_client() -> AsyncGenerator[TestClient, None]:
   safe_counter: SafeCounter = SafeCounter()
 
   @app.get("/safe-counter")
-  async def increment_safe_counter(decorum: Annotated[Decorum, Depends(Decorum)]) -> int:
-    await decorum.add_task(safe_counter.increment)
+  async def increment_safe_counter(
+    decorum: Annotated[Decorum, Depends(Decorum)],
+    amount: None | int = None,
+  ) -> int:
+    if amount is not None:
+      await decorum.add_task(safe_counter.add, amount)
+    else:
+      await decorum.add_task(safe_counter.increment)
     return await safe_counter.current
 
   @app.get("/safe-counter/{amount}")
@@ -122,8 +128,14 @@ def test_client() -> AsyncGenerator[TestClient, None]:
   unsafe_counter: UnsafeCounter = UnsafeCounter()
 
   @app.get("/unsafe-counter")
-  async def increment_unsafe_counter(decorum: Annotated[Decorum, Depends(Decorum)]) -> int:
-    await decorum.add_task(unsafe_counter.increment)
+  async def increment_unsafe_counter(
+    decorum: Annotated[Decorum, Depends(Decorum)],
+    amount: None | int = None,
+  ) -> int:
+    if amount is not None:
+      await decorum.add_task(unsafe_counter.add, amount)
+    else:
+      await decorum.add_task(unsafe_counter.increment)
     return await unsafe_counter.current
 
   @app.get("/unsafe-counter/{amount}")
