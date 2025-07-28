@@ -80,6 +80,7 @@ tests = [
   'litestar >=2.16.0',
   'pytest >=8.4.1',
   'pytest-asyncio >=1.1.0',
+  'pytest-modern >=0.7.3',
 ]
 
 
