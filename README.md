@@ -90,6 +90,36 @@ app = Litestar(lifespan=[lifespan], route_handlers=[add_sleep_task_to_queue])
 
 ## Contributions
 
+### Project structure
+
+```
+etiquette/
+│
+├── src/
+│   └── etiquette/
+│       ├── __init__.py       # Entrypoint to the etiquette package
+│       ├── core.py           # Defines `Etiquette` core where shared class vars are initiated
+│       └── decorum.py        # Defines `Decorum` class utilized by Dependency Injection
+│
+├── static/
+│   ├── etiquette.svg         # Graphics representing project
+│   ├── etiquette-banner.svg  # Project banner displayed on README.md
+│   └── etiquette-social.svg  # Social media preview banner
+│
+├── LICENSE                   # Details of MIT License
+└── README.md                 # Descriptions and roadmap
+```
+
+Notable exemptions: `dotfiles`, `examples` and, `tests`
+
+### Roadmap
+
+* Validates task failing will retry a pre-determined set of times
+* Add [testcontainers](https://github.com/testcontainers/testcontainers-python)
+  and attempt complex I/O bound tasks
+* Experiment with Server-Side Events
+* Add an [project.optional-dependencies] for `standard` with `uvloop`
+
 ### Prerequisites
 
 * [git](https://git-scm.com/) - --fast-version-control
