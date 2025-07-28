@@ -32,6 +32,7 @@ class Decorum:
     """Add a task to the queue"""
     task_id: UUID = uuid()
     task_data: TaskData = TaskData(
+      args=args,
       callable=callable,
       kwargs=kwargs,
       task_id=task_id,

@@ -79,7 +79,7 @@ class Etiquette:
     for attempt in range(cls.retries):
       try:
         logger.debug(msg=f"Processing task {task_data.task_id}, attempt {attempt + 1}")
-        await task_data.callable(**task_data.kwargs)
+        await task_data.callable(*task_data.args, **task_data.kwargs)
         logger.debug(msg=f"Task {task_data.task_id} completed successfully")
         return
       except Exception as err:

@@ -19,7 +19,8 @@ from uuid import UUID
 @dataclass
 class TaskData:
   callable: Callable[..., Any]
-  kwargs: Any | None
+  args: tuple[Any] | None
+  kwargs: dict[str, Any] | None
   task_id: UUID
 
 
