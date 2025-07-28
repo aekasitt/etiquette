@@ -186,7 +186,7 @@ uv sync --dev --group tests
   <summary> Sample installation output for development and test dependencies </summary>
 
   ```sh
-  $ uv sync --dev --group=tests
+  $ uv sync --dev --group tests
   > Resolved 48 packages in 9ms
   > Installed 40 packages in 104ms
   >  + annotated-types==0.7.0
