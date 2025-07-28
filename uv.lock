@@ -92,7 +92,11 @@ name = "etiquette"
 version = "0.0.1"
 source = { editable = "." }
 
-[package.optional-dependencies]
+[package.dev-dependencies]
+dev = [
+    { name = "mypy" },
+    { name = "ruff" },
+]
 examples = [
     { name = "fastapi" },
     { name = "litestar" },
@@ -115,34 +119,33 @@ tests = [
     { name = "pytest-modern" },
 ]
 
-[package.dev-dependencies]
-dev = [
-    { name = "mypy" },
-    { name = "ruff" },
-]
-
 [package.metadata]
-requires-dist = [
-    { name = "fastapi", marker = "extra == 'examples'", specifier = ">=0.116.1" },
-    { name = "fastapi", marker = "extra == 'fastapi'", specifier = ">=0.116.1" },
-    { name = "fastapi", marker = "extra == 'tests'", specifier = ">=0.116.1" },
-    { name = "httpx", marker = "extra == 'tests'", specifier = ">=0.28.1" },
-    { name = "litestar", marker = "extra == 'examples'", specifier = ">=2.16.0" },
-    { name = "litestar", marker = "extra == 'litestar'", specifier = ">=2.16.0" },
-    { name = "litestar", marker = "extra == 'tests'", specifier = ">=2.16.0" },
-    { name = "pytest", marker = "extra == 'tests'", specifier = ">=8.4.1" },
-    { name = "pytest-asyncio", marker = "extra == 'tests'", specifier = ">=1.1.0" },
-    { name = "pytest-modern", marker = "extra == 'tests'", specifier = ">=0.7.3" },
-    { name = "uvicorn", marker = "extra == 'examples'", specifier = ">=0.35.0" },
-    { name = "uvicorn", marker = "extra == 'fastapi'", specifier = ">=0.35.0" },
-    { name = "uvicorn", marker = "extra == 'litestar'", specifier = ">=0.35.0" },
-]
-provides-extras = ["fastapi", "litestar", "examples", "tests"]
 
 [package.metadata.requires-dev]
 dev = [
     { name = "mypy", specifier = ">=1.17.0" },
     { name = "ruff", specifier = ">=0.12.4" },
+]
+examples = [
+    { name = "fastapi", specifier = ">=0.116.1" },
+    { name = "litestar", specifier = ">=2.16.0" },
+    { name = "uvicorn", specifier = ">=0.35.0" },
+]
+fastapi = [
+    { name = "fastapi", specifier = ">=0.116.1" },
+    { name = "uvicorn", specifier = ">=0.35.0" },
+]
+litestar = [
+    { name = "litestar", specifier = ">=2.16.0" },
+    { name = "uvicorn", specifier = ">=0.35.0" },
+]
+tests = [
+    { name = "fastapi", specifier = ">=0.116.1" },
+    { name = "httpx", specifier = ">=0.28.1" },
+    { name = "litestar", specifier = ">=2.16.0" },
+    { name = "pytest", specifier = ">=8.4.1" },
+    { name = "pytest-asyncio", specifier = ">=1.1.0" },
+    { name = "pytest-modern", specifier = ">=0.7.3" },
 ]
 
 [[package]]

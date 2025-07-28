@@ -8,6 +8,27 @@ dev = [
   'mypy >=1.17.0',
   'ruff >=0.12.4',
 ]
+examples = [
+  'fastapi >=0.116.1',
+  'litestar >=2.16.0',
+  'uvicorn >=0.35.0',
+]
+fastapi = [
+  'fastapi >=0.116.1',
+  'uvicorn >=0.35.0',
+]
+litestar = [
+  'litestar >=2.16.0',
+  'uvicorn >=0.35.0',
+]
+tests = [
+  'fastapi >=0.116.1',
+  'httpx >=0.28.1',
+  'litestar >=2.16.0',
+  'pytest >=8.4.1',
+  'pytest-asyncio >=1.1.0',
+  'pytest-modern >=0.7.3',
+]
 
 
 [project]
@@ -58,30 +79,6 @@ name = 'etiquette'
 repository = 'https://github.com/aekasitt/etiquette.git'
 requires-python = '>=3.9'
 version = '0.0.1'
-
-
-[project.optional-dependencies]
-fastapi = [
-  'fastapi >=0.116.1',
-  'uvicorn >=0.35.0',
-]
-litestar = [
-  'litestar >=2.16.0',
-  'uvicorn >=0.35.0',
-]
-examples = [
-  'fastapi >=0.116.1',
-  'litestar >=2.16.0',
-  'uvicorn >=0.35.0',
-]
-tests = [
-  'fastapi >=0.116.1',
-  'httpx >=0.28.1',
-  'litestar >=2.16.0',
-  'pytest >=8.4.1',
-  'pytest-asyncio >=1.1.0',
-  'pytest-modern >=0.7.3',
-]
 
 
 [tool.mypy]
