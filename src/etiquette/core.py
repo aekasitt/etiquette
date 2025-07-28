@@ -89,9 +89,7 @@ class Etiquette:
           logger.debug(msg=f"Retrying task {task_data.task_id} in {wait_time} seconds...")
           await sleep(delay=wait_time)
         else:
-          logger.error(
-            msg=f"Task {task_data.task_id} failed after {cls.retries} attempts"
-          )
+          logger.error(msg=f"Task {task_data.task_id} failed after {cls.retries} attempts")
 
 
 __all__: Final[tuple[str, ...]] = ("Etiquette",)
