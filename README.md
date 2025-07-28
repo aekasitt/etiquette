@@ -32,7 +32,61 @@ You can use `etiquette` simply by installing via `pip` on your terminal emulator
 pip install etiquette
 ```
 
-TODO: TBD;
+Then you can integrate this library in your ASGI codebase using the lifespan manager
+as such:
+
+```python
+from asyncio import sleep
+from contextlib import asynccontextmanager
+from etiquette import Decorum, Etiquette
+from fastapi import Depends, FastAPI
+from typing import Annotated
+
+@asynccontextmanager
+async def lifespan(app):
+  Etiquette.initiate(max_concurrent_tasks=16)
+  yield
+  await Etiquette.release()
+
+app = FastAPI(lifespan=lifespan)
+
+@app.get("/sleep")
+async def add_sleep_task_to_queue(decorum: Annotated[Decorum, Depends(Decorum)]) -> str:
+  async def sleep_3() -> None:
+    await sleep(3)
+    print("task done")
+
+  await decorum.add_task(sleep_3)
+  return "OK"
+```
+
+The above is an example written in FastAPI framework, for Litestar see below:
+
+```python
+from asyncio import sleep
+from contextlib import asynccontextmanager
+from etiquette import Decorum, Etiquette
+from litestar import Litestar, get
+from litestar.di import Provide
+from typing import AsyncGenerator
+
+@asynccontextmanager
+async def lifespan(app):
+  Etiquette.initiate(max_concurrent_tasks=16)
+  yield
+  await Etiquette.release()
+
+@get("/sleep", dependencies={"decorum": Provide(Decorum, sync_to_thread=True)})
+async def add_sleep_task_to_queue(decorum: Decorum) -> str:
+  async def sleep_3() -> None:
+    await sleep(3)
+    print("task done")
+
+  await decorum.add_task(sleep_3)
+  return "OK"
+
+app = Litestar(lifespan=[lifespan], route_handlers=[add_sleep_task_to_queue])
+```
 
 ## Contributions
 
