@@ -171,7 +171,7 @@ above: The four examples include:
 
 4. Litestar using Decorum to interact with a thread-safe [AtomicCounter](https://gist.github.com/benhoyt/8c8a8d62debe8e5aa5340373f9c509c7)
     ```sh
-    uvicorn examples.fastapi_counter:app --port 8000 --reload
+    uvicorn examples.litestar_counter:app --port 8000 --reload
     ```
 
 ### Tests
