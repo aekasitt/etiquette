@@ -15,6 +15,7 @@ Tests for Etiquette plugin for Litestar TestClient fixture
 
 ### Standard packages ###
 from asyncio import Lock, sleep
+from asyncio.exceptions import CancelledError
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from typing import AsyncGenerator, Final
@@ -100,6 +101,20 @@ def test_client() -> AsyncGenerator[TestClient, None]:
     await decorum.add_task(safe_counter.add, amount=amount)
     return await safe_counter.current
 
+  @dataclass
+  class SureFailCounter:
+    """Counter that does not count, just fails"""
+
+    async def increment(self) -> int:
+      raise CancelledError
+
+  sure_fail_counter: SureFailCounter = SureFailCounter()
+
+  @get("/sure-fail-counter")
+  async def increment_sure_fail_counter(decorum: Decorum) -> int:
+    await decorum.add_task(sure_fail_counter.increment)
+    return 0
+
   unsafe_counter: UnsafeCounter = UnsafeCounter()
 
   @get("/unsafe-counter")
@@ -119,7 +134,8 @@ def test_client() -> AsyncGenerator[TestClient, None]:
       add_amount_to_safe_counter,
       add_amount_to_unsafe_counter,
       increment_safe_counter,
-      increment_unsafe_counter
+      increment_sure_fail_counter,
+      increment_unsafe_counter,
     ],
   )
 

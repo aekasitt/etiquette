@@ -15,6 +15,7 @@ Tests for Etiquette plugin for FastAPI TestClient fixture
 
 ### Standard packages ###
 from asyncio import Lock, sleep
+from asyncio.exceptions import CancelledError
 from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from typing import Annotated, AsyncGenerator, Final
@@ -99,11 +100,24 @@ def test_client() -> AsyncGenerator[TestClient, None]:
 
   @app.get("/safe-counter/{amount}")
   async def add_amount_to_safe_counter(
-    amount: int,
-    decorum: Annotated[Decorum, Depends(Decorum)]
+    amount: int, decorum: Annotated[Decorum, Depends(Decorum)]
   ) -> int:
     await decorum.add_task(safe_counter.add, amount=amount)
     return await safe_counter.current
+
+  @dataclass
+  class SureFailCounter:
+    """Counter that does not count, just fails"""
+
+    async def increment(self) -> int:
+      raise CancelledError
+
+  sure_fail_counter: SureFailCounter = SureFailCounter()
+
+  @app.get("/sure-fail-counter")
+  async def increment_sure_fail_counter(decorum: Annotated[Decorum, Depends(Decorum)]) -> int:
+    await decorum.add_task(sure_fail_counter.increment)
+    return 0
 
   unsafe_counter: UnsafeCounter = UnsafeCounter()
 
@@ -114,14 +128,13 @@ def test_client() -> AsyncGenerator[TestClient, None]:
 
   @app.get("/unsafe-counter/{amount}")
   async def add_amount_to_unsafe_counter(
-    amount: int,
-    decorum: Annotated[Decorum, Depends(Decorum)]
+    amount: int, decorum: Annotated[Decorum, Depends(Decorum)]
   ) -> int:
     await decorum.add_task(unsafe_counter.add, amount=amount)
     return await unsafe_counter.current
 
   @app.exception_handler(ValueError)
-  def csrf_protect_error_handler(request: Request, exc: ValueError) -> JSONResponse:
+  def value_error_handler(request: Request, exc: ValueError) -> JSONResponse:
     return JSONResponse(status_code=520, content={"detail": str(exc)})
 
   with TestClient(app) as client:
