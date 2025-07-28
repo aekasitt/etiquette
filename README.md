@@ -157,7 +157,7 @@ above: The four examples include:
 
 1. FastAPI using Decorum to add an AsyncIO sleeping task
     ```sh
-    uvicorn examples.fastapi_app:app --port 8000 --reload
+    uvicorn examples.fastapi_sleeper:app --port 8000 --reload
     ```
 
 2. FastAPI using Decorum to interact with a thread-safe [AtomicCounter](https://gist.github.com/benhoyt/8c8a8d62debe8e5aa5340373f9c509c7)
@@ -166,7 +166,7 @@ above: The four examples include:
     ```
 3. Litestar using Decorum to add an AsyncIO sleeping task
     ```sh
-    uvicorn examples.litestar_app:app --port 8000 --reload
+    uvicorn examples.litestar_sleeper:app --port 8000 --reload
     ```
 
 4. Litestar using Decorum to interact with a thread-safe [AtomicCounter](https://gist.github.com/benhoyt/8c8a8d62debe8e5aa5340373f9c509c7)
