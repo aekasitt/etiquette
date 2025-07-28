@@ -34,23 +34,152 @@ pip install etiquette
 
 TODO: TBD;
 
-### Run examples
-
-## Contribution
+## Contributions
 
 ### Prerequisites
 
+* [git](https://git-scm.com/) - --fast-version-control
 * [python](https://www.python.org) 3.9 and above - High-level general-purpose programming language
 * [uv](https://docs.astral.sh/uv) - Extremely fast Python package & project manager, written in Rust
 
-TODO: TBD;
+The following guide walks through setting up your local working environment using `git`
+as distributed version control system and `uv` as Python package and version manager.
+If you do not have `git` installed, run the following command.
+
+<details>
+  <summary> Install using Homebrew (Darwin) </summary>
+  
+  ```bash
+  brew install git
+  ```
+</details>
+
+<details>
+  <summary> Install via binary installer (Linux) </summary>
+  
+  * Debian-based package management
+  ```bash
+  sudo apt install git-all
+  ```
+
+  * Fedora-based package management
+  ```bash
+  sudo dnf install git-all
+  ```
+</details>
+
+If you do not have `uv` installed, run the following command.
+
+<details>
+  <summary> Install using Homebrew (Darwin) </summary>
+
+  ```bash
+  brew install uv
+  ```
+</details>
+
+<details>
+  <summary> Install using standalone installer (Darwin and Linux) </summary>
+
+  ```bash
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  ```
+</details>
+
+Once you have `git` distributed version control system installed, you can
+clone the current repository and  install any version of Python above version
+3.9 for this project. The following commands help you set up and activate a
+Python virtual environment where `uv` can download project dependencies from the `PyPI`
+open-sourced registry defined under `pyproject.toml` file.
+
+<details>
+  <summary> Set up environment and synchronize project dependencies </summary>
+
+  ```bash
+  git clone git@github.com:aekasitt/etiquette.git
+  cd etiquette
+  uv venv --python 3.13.5
+  source .venv/bin/activate
+  uv sync --dev
+  ```
+</details>
+
+### Run examples
+
+We need to install a few extra dependencies to run attached examples found
+under the `examples` directory on root. First run the following command:
+
+```sh
+uv sync --dev --group examples
+```
+
+<details>
+  <summary> Sample installation output for examples' dependencies </summary>
+
+  ```sh
+  $ uv sync --dev --group examples
+  > Resolved 48 packages in 1ms
+  > Installed 29 packages in 58ms
+  >  + annotated-types==0.7.0
+  >  + anyio==4.9.0
+  >  + certifi==2025.7.14
+  >  + click==8.2.1
+  >  + faker==37.4.2
+  >  + fastapi==0.116.1
+  >  + h11==0.16.0
+  >  + httpcore==1.0.9
+  >  + httpx==0.28.1
+  >  + idna==3.10
+  >  + litestar==2.16.0
+  >  + litestar-htmx==0.5.0
+  >  + markdown-it-py==3.0.0
+  >  + mdurl==0.1.2
+  >  + msgspec==0.19.0
+  >  + multidict==6.6.3
+  >  + multipart==1.2.1
+  >  + polyfactory==2.22.1
+  >  + pydantic==2.11.7
+  >  + pydantic-core==2.33.2
+  >  + pygments==2.19.2
+  >  + pyyaml==6.0.2
+  >  + rich==14.0.0
+  >  + rich-click==1.8.9
+  >  + sniffio==1.3.1
+  >  + starlette==0.47.2
+  >  + typing-inspection==0.4.1
+  >  + tzdata==2025.2
+  >  + uvicorn==0.35.0
+  ```
+</details>
+
+Now you can run all four attached examples as such using the `uvicorn` command installed
+above: The four examples include:
+
+1. FastAPI using Decorum to add an AsyncIO sleeping task
+    ```sh
+    uvicorn examples.fastapi_app:app --port 8000 --reload
+    ```
+
+2. FastAPI using Decorum to interact with a thread-safe [AtomicCounter](https://gist.github.com/benhoyt/8c8a8d62debe8e5aa5340373f9c509c7)
+    ```sh
+    uvicorn examples.fastapi_counter:app --port 8000 --reload
+    ```
+3. Litestar using Decorum to add an AsyncIO sleeping task
+    ```sh
+    uvicorn examples.litestar_app:app --port 8000 --reload
+    ```
+
+4. Litestar using Decorum to interact with a thread-safe [AtomicCounter](https://gist.github.com/benhoyt/8c8a8d62debe8e5aa5340373f9c509c7)
+    ```sh
+    uvicorn examples.fastapi_counter:app --port 8000 --reload
+    ```
 
 ### Tests
 
 This project uses `pytest` to run automated tests. Install the dependencies with:
 
 ```sh
-uv sync --dev --group=tests
+uv sync --dev --group tests
 ```
 
 <details>
