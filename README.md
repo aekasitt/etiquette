@@ -273,7 +273,8 @@ Refer to the [pytest documentation](https://docs.pytest.org/) for more advanced 
 
 ## Acknowledgements
 
-TODO: TBD;
+1. [หมึกหมด - Muekmod](https://www.f0nt.com/release/sov-muekmod/)
+  typeface by [uvSOV - Worawut Thanawatanawanich](https://fb.com/worawut.thanawatanawanich)
 
 ## License
 
