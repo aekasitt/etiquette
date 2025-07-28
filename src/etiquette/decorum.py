@@ -28,11 +28,7 @@ class Decorum:
     if not Etiquette.running:
       raise ValueError("Please initiate Etiquette at FastAPI / Litestar startup")
 
-  async def add_task(
-    self,
-    callable: Callable[..., Any],
-    **kwargs: Any,
-  ) -> UUID:
+  async def add_task(self, callable: Callable[..., Any], *args: Any, **kwargs: Any) -> UUID:
     """Add a task to the queue"""
     task_id: UUID = uuid()
     task_data: TaskData = TaskData(
