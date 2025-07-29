@@ -21,6 +21,10 @@ litestar = [
   'litestar >=2.16.0',
   'uvicorn >=0.35.0',
 ]
+starlette = [
+  'starlette >=0.47.2',
+  'uvicorn >=0.35.0',
+]
 tests = [
   'fastapi >=0.116.1',
   'httpx >=0.28.1',
