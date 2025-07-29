@@ -18,6 +18,8 @@ Plugin designed for `dependency injection` pattern offered by following ASGI fra
   framework, high performance, easy to learn, fast to code, ready for production
 * [Litestar](https://litestar.dev)
   \- build performant APIs with Litestar; powerful, lightweight & flexible ASGI framework
+* [Starlette](https://www.starlette.io/)
+  , the little ASGI framework that shines ✨
 
 ### Prerequisites
 
@@ -87,6 +89,8 @@ async def add_sleep_task_to_queue(decorum: Decorum) -> str:
 
 app = Litestar(lifespan=[lifespan], route_handlers=[add_sleep_task_to_queue])
 ```
+
+See other examples such as Starlette, ... under `examples` directory.
 
 ## Contributions
 
@@ -253,10 +257,16 @@ above: The four examples include:
     ```sh
     uvicorn examples.litestar_sleeper:app --port 8000 --reload
     ```
-
 4. Litestar using Decorum to interact with a thread-safe [AtomicCounter](https://gist.github.com/benhoyt/8c8a8d62debe8e5aa5340373f9c509c7)
     ```sh
     uvicorn examples.litestar_counter:app --port 8000 --reload
+3. Starlette using Decorum to add an AsyncIO sleeping task
+    ```sh
+    uvicorn examples.starlette_sleeper:app --port 8000 --reload
+    ```
+4. Starlette using Decorum to interact with a thread-safe [AtomicCounter](https://gist.github.com/benhoyt/8c8a8d62debe8e5aa5340373f9c509c7)
+    ```sh
+    uvicorn examples.starlette_counter:app --port 8000 --reload
     ```
 
 ### Tests
