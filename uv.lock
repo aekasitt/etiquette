@@ -126,6 +126,7 @@ tests = [
     { name = "pytest" },
     { name = "pytest-asyncio" },
     { name = "pytest-modern" },
+    { name = "uvloop" },
 ]
 
 [package.metadata]
@@ -161,6 +162,7 @@ tests = [
     { name = "pytest", specifier = ">=8.4.1" },
     { name = "pytest-asyncio", specifier = ">=1.1.0" },
     { name = "pytest-modern", specifier = ">=0.7.3" },
+    { name = "uvloop", specifier = ">=0.21.0" },
 ]
 
 [[package]]
