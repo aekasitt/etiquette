@@ -89,7 +89,7 @@ wheels = [
 
 [[package]]
 name = "etiquette"
-version = "0.0.2"
+version = "0.0.3"
 source = { editable = "." }
 
 [package.optional-dependencies]
@@ -105,6 +105,7 @@ dev = [
 examples = [
     { name = "fastapi" },
     { name = "litestar" },
+    { name = "starlette" },
     { name = "uvicorn" },
 ]
 fastapi = [
@@ -141,6 +142,7 @@ dev = [
 examples = [
     { name = "fastapi", specifier = ">=0.116.1" },
     { name = "litestar", specifier = ">=2.16.0" },
+    { name = "starlette", specifier = ">=0.47.2" },
     { name = "uvicorn", specifier = ">=0.35.0" },
 ]
 fastapi = [

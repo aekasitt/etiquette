@@ -2,7 +2,7 @@
 # coding:utf-8
 # Copyright (C) 2025 All rights reserved.
 # FILENAME:    ~~/examples/litestar_sleeper.py
-# VERSION:     0.0.1
+# VERSION:     0.0.3
 # CREATED:     2025-07-23 14:20
 # AUTHOR:      Sitt Guruvanich <aekazitt+github@gmail.com>
 # DESCRIPTION:

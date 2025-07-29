@@ -2,7 +2,7 @@
 # coding:utf-8
 # Copyright (C) 2025 All rights reserved.
 # FILENAME:    ~~/tests/litestar/cancelled.py
-# VERSION:     0.0.2
+# VERSION:     0.0.3
 # CREATED:     2025-07-24 13:11
 # AUTHOR:      Sitt Guruvanich <aekazitt+github@gmail.com>
 # DESCRIPTION: Test script to demonstrate Decorum retries on Litestar
