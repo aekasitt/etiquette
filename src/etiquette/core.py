@@ -20,6 +20,7 @@ from typing import Any, ClassVar, Final
 ### Third-party packages ###
 try:
   import uvloop
+
   uvloop.install()
 except ImportError:
   pass
