@@ -346,7 +346,7 @@ pytest
   > ╭─────────────────────────────────── test session starts ──────────────────────────────────╮
   > │ platform darwin pytest 8.4.1 python 3.13.5                                               │
   > │ plugins anyio-4.9.0, modern-0.7.3, asyncio-1.1.0, Faker-37.4.2                           │
-  > │ root /Users/mackasitt/workspaces/pypi-etiquette                                          │
+  > │ root /.../.../.../etiquette                                                              │
   > │ configfile pyproject.toml                                                                │
   > ╰──────────────────────────────────────────────────────────────────────────────────────────╯
   > Collected 14 items (14 selected)
