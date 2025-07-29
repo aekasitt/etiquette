@@ -11,6 +11,7 @@ dev = [
 examples = [
   'fastapi >=0.116.1',
   'litestar >=2.16.0',
+  'starlette >=0.47.2',
   'uvicorn >=0.35.0',
 ]
 fastapi = [
