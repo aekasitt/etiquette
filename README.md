@@ -27,16 +27,16 @@ This plugin designed and tested on the following ASGI frameworks.
 ### Alternatives
 
 * [FastAPI BackgroundTasks](https://fastapi.tiangolo.com/tutorial/background-tasks)
-  > [!NOTE]
-  > see [Starlette BackgroundTasks](https://www.starlette.io/background)
+    > [!NOTE]
+    > see [Starlette BackgroundTasks](https://www.starlette.io/background)
 * [Litestar BackgroundTasks](https://docs.litestar.dev/2/reference/background_tasks.html)
 * [Starlette BackgroundTasks](https://www.starlette.io/background)
 * [Celery]()
-  > [!NOTE]
-  > see [Asynchronous Tasks with FastAPI and Celery, TestDriven](https://testdriven.io/blog/fastapi-and-celery)
+    > [!NOTE]
+    > see [Asynchronous Tasks with FastAPI and Celery, TestDriven](https://testdriven.io/blog/fastapi-and-celery)
 * [Dramatiq: background tasks](https://dramatiq.io) [(repository)](https://github.com/Bogdanp/dramatiq)
-  > [!NOTE]
-  > see [daconjurer/fastapi-dramatiq](https://github.com/daconjurer/fastapi-dramatiq)
+    > [!NOTE]
+    > see [daconjurer/fastapi-dramatiq](https://github.com/daconjurer/fastapi-dramatiq)
 
 ### Prerequisites
 
