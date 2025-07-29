@@ -55,7 +55,7 @@ def test_client() -> AsyncGenerator[TestClient, None]:
     count: int = 0
 
     async def add(self, amount: int) -> None:
-      await sleep(0.001)
+      await sleep(0.01)
       self.count += 1
 
     @property
@@ -63,7 +63,7 @@ def test_client() -> AsyncGenerator[TestClient, None]:
       return self.count
 
     async def increment(self) -> None:
-      await sleep(0.001)
+      await sleep(0.01)
       self.count += 1
 
   @dataclass
