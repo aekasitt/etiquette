@@ -17,6 +17,13 @@ from asyncio.exceptions import CancelledError, TimeoutError
 from logging import Logger, getLogger
 from typing import Any, ClassVar, Final
 
+### Third-party packages ###
+try:
+  import uvloop
+  uvloop.install()
+except ImportError:
+  pass
+
 ### Local modules ###
 from etiquette._types import TaskData
 

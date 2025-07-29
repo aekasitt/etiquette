@@ -85,6 +85,11 @@ requires-python = '>=3.9'
 version = '0.0.2'
 
 
+[project.optional-dependencies]
+standard = [
+  'uvloop >=0.21.0',
+]
+
 [tool.mypy]
 disallow_incomplete_defs = true
 disallow_untyped_calls = true
