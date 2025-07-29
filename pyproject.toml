@@ -78,7 +78,7 @@ maintainers = [
 name = 'etiquette'
 repository = 'https://github.com/aekasitt/etiquette.git'
 requires-python = '>=3.9'
-version = '0.0.1'
+version = '0.0.2'
 
 
 [tool.mypy]
