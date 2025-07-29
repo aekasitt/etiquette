@@ -12,7 +12,10 @@
 
 [![Etiquette Banner](./static/etiquette-banner.svg)](https://github.com/aekasitt/etiquette/blob/master/static/etiquette-banner.svg)
 
-Plugin designed for `dependency injection` pattern offered by following ASGI frameworks
+Blazingly fast background queue manager plugin for running coroutines with fine-tuned control.
+Makes use of [uvloop](https://github.com/MagicStack/uvloop) to achieve simple, but powerful
+speed upgrade while maintaining [AsyncIO](https://docs.python.org/3/library/asyncio.html)-compliant
+This plugin designed and tested on the following ASGI frameworks.
 
 * [FastAPI](https://fastapi.tiangolo.com)
   framework, high performance, easy to learn, fast to code, ready for production
@@ -20,6 +23,17 @@ Plugin designed for `dependency injection` pattern offered by following ASGI fra
   \- build performant APIs with Litestar; powerful, lightweight & flexible ASGI framework
 * [Starlette](https://www.starlette.io/)
   , the little ASGI framework that shines ✨
+
+### Alternatives
+
+* [FastAPI BackgroundTasks](https://fastapi.tiangolo.com/tutorial/background-tasks)
+  > [!NOTE] see [Starlette BackgroundTasks](https://www.starlette.io/background)
+* [Litestar BackgroundTasks](https://docs.litestar.dev/2/reference/background_tasks.html)
+* [Starlette BackgroundTasks](https://www.starlette.io/background)
+* [Celery]()
+  > [!NOTE] see [Asynchronous Tasks with FastAPI and Celery, TestDriven](https://testdriven.io/blog/fastapi-and-celery)
+* [Dramatiq: background tasks](https://dramatiq.io) [(repository)](https://github.com/Bogdanp/dramatiq)
+  > [!NOTE] see [daconjurer/fastapi-dramatiq](https://github.com/daconjurer/fastapi-dramatiq)
 
 ### Prerequisites
 
@@ -29,6 +43,12 @@ Plugin designed for `dependency injection` pattern offered by following ASGI fra
 ### Getting started
 
 You can use `etiquette` simply by installing via `pip` on your terminal emulator of choice.
+
+```sh
+pip install 'etiquette[standard]'
+```
+
+Or opt out from `uvloop` by running the following command:
 
 ```sh
 pip install etiquette
@@ -253,7 +273,6 @@ above: The four examples include:
     ```sh
     uvicorn examples.fastapi_sleeper:app --port 8000 --reload
     ```
-
 2. FastAPI using Decorum to interact with a thread-safe [AtomicCounter](https://gist.github.com/benhoyt/8c8a8d62debe8e5aa5340373f9c509c7)
     ```sh
     uvicorn examples.fastapi_counter:app --port 8000 --reload
