@@ -2,7 +2,7 @@
 # coding:utf-8
 # Copyright (C) 2025 All rights reserved.
 # FILENAME:    ~~/tests/litestar/splat.py
-# VERSION:     0.0.1
+# VERSION:     0.0.2
 # CREATED:     2025-07-26 12:21
 # AUTHOR:      Sitt Guruvanich <aekazitt+github@gmail.com>
 # DESCRIPTION: Test script to demonstrate Decorum passing splat arguments

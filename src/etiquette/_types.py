@@ -2,7 +2,7 @@
 # coding:utf-8
 # Copyright (C) 2025 All rights reserved.
 # FILENAME:    ~~/src/etiquette/_types.py
-# VERSION:     0.0.1
+# VERSION:     0.0.2
 # CREATED:     2025-07-23 14:20
 # AUTHOR:      Sitt Guruvanich <aekazitt+github@gmail.com>
 # DESCRIPTION:
