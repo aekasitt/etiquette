@@ -98,6 +98,7 @@ etiquette/
 ├── src/
 │   └── etiquette/
 │       ├── __init__.py       # Entrypoint to the etiquette package
+│       ├── _types.py         # Defines internal dataclass object `TaskData`
 │       ├── core.py           # Defines `Etiquette` core where shared class vars are initiated
 │       └── decorum.py        # Defines `Decorum` class utilized by Dependency Injection
 │
