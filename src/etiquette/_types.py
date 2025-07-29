@@ -11,17 +11,17 @@
 # *************************************************************
 
 ### Standard packages ###
-from dataclasses import dataclass
-from typing import Any, Callable, Final
+from dataclasses import dataclass, field
+from typing import Any, Callable, Mapping, Final
 from uuid import UUID
 
 
 @dataclass
 class TaskData:
   callable: Callable[..., Any]
-  args: tuple[Any] | None
-  kwargs: dict[str, Any] | None
   task_id: UUID
+  args: tuple[Any, ...] = field(default_factory=tuple)
+  kwargs: Mapping[str, Any] = field(default_factory=dict)
 
 
 __all__: Final[tuple[str, ...]] = ("TaskData",)
