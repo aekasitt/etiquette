@@ -35,9 +35,9 @@ app: FastAPI = FastAPI(lifespan=lifespan)
 
 
 @dataclass
-class Counter:
-  count: int = 0
+class AtomicCounter:
   _lock: Lock = field(default_factory=Lock, init=False)
+  count: int = 0
 
   async def increment(self) -> None:
     async with self._lock:
@@ -47,12 +47,11 @@ class Counter:
     print(f"{current_count=}")
 
 
-counter: Counter = Counter()
+counter: AtomicCounter = AtomicCounter()
 
 
 @app.get("/add-task")
 async def add_new_task(decorum: Annotated[Decorum, Depends(Decorum)]) -> str:
-
   await decorum.add_task(counter.increment)
   return "OK"
 
