@@ -117,13 +117,18 @@ etiquette/
 
 Notable exemptions: `dotfiles`, `examples` and, `tests`
 
+### Change-logs
+
+* **0.0.1** proof of concept, with FastAPI and Litestar examples
+* **0.0.2** integrate with Starlette State, and annotate types 
+* **0.0.3** define `etiquette[standard]` install with `uvloop`
+
 ### Roadmap
 
 * Validates task failing will retry a pre-determined set of times
 * Add [testcontainers](https://github.com/testcontainers/testcontainers-python)
   and attempt complex I/O bound tasks
 * Experiment with Server-Side Events
-* Add an [project.optional-dependencies] for `standard` with `uvloop`
 
 ### Prerequisites
 
